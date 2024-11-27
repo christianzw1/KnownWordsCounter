@@ -5,7 +5,7 @@ const clearWordsButton = document.getElementById('clearWordsButton');
 const uniqueWordsList = document.getElementById('uniqueWordsList');
 const wordCount = document.querySelector('#wordCount span');
 
-// Armazena as palavras únicas no navegador usando localStorage
+// Inicializa o conjunto de palavras únicas a partir do localStorage
 let uniqueWordsSet = new Set(JSON.parse(localStorage.getItem('uniqueWords')) || []);
 
 // Função para adicionar palavras únicas
@@ -15,6 +15,7 @@ function addUniqueWords() {
     .split(/[\s,]+/) // Divide por espaços ou vírgulas
     .filter(word => word.trim() !== ''); // Remove palavras vazias
 
+  // Adiciona novas palavras ao conjunto
   newWords.forEach(word => uniqueWordsSet.add(word));
   saveToLocalStorage(); // Salva no localStorage
   renderUniqueWords();  // Atualiza a interface
@@ -39,10 +40,11 @@ function saveToLocalStorage() {
 
 // Função para limpar todas as palavras
 function clearAllWords() {
-  if (confirm('Tem certeza de que deseja limpar todas as palavras?')) {
-    uniqueWordsSet.clear();
-    saveToLocalStorage();
-    renderUniqueWords();
+  const confirmClear = confirm('Tem certeza de que deseja limpar todas as palavras?');
+  if (confirmClear) {
+    uniqueWordsSet.clear(); // Limpa o conjunto
+    saveToLocalStorage();   // Atualiza o localStorage
+    renderUniqueWords();    // Atualiza a interface
   }
 }
 
